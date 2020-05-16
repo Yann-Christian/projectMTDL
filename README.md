@@ -1,2 +1,1 @@
-# projectMTDL
-Application for Hospital management 
+# javahealth
