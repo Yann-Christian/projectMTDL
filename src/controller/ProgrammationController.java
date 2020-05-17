@@ -5,10 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Programmation;
 import model.Utilisateur;
@@ -16,13 +13,16 @@ import model.enums.DomaineMedical;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class ProgrammationController  implements Initializable {
+public class ProgrammationController implements Initializable {
 
 
 
     Utilisateur utilisateur;
+
 
     @FXML
     private TextField nametxt;
@@ -38,11 +38,28 @@ public class ProgrammationController  implements Initializable {
     public Button valideB;
     @FXML
     public DatePicker datePickerS;
+    @FXML
+    public SplitMenuButton medecinList;
+    @FXML
+    public SplitMenuButton hopitalList;
+    @FXML
+    public SplitMenuButton domaineList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         nametxt.setText("...");
         prenomtxt.setText("...");
+
+        UserServiceImp serviceImp = new UserServiceImp();
+        List<Utilisateur> medecin = serviceImp.getUtilisateurByTyPeMedical("MEDECIN");
+        medecin.forEach(utilisateur -> {
+            MenuItem choice = new MenuItem(utilisateur.getName() +" - "+ utilisateur.getPrenom());
+            choice.setOnAction((e)-> {
+                medecinSelected.setText(choice.getText());
+            });
+            medecinList.getItems().add(choice);
+        });
+
     }
 
     public void hopitalun(ActionEvent event){
@@ -57,19 +74,16 @@ public class ProgrammationController  implements Initializable {
         MenuItem mn = (MenuItem)event.getSource();
         domaineMedicalselected.setText(mn.getText());
     }
-    public void medecinSelect(ActionEvent event) {
-        MenuItem menu = (MenuItem)event.getSource();
-        medecinSelected.setText(menu.getText());
-
-    }
 
     public void injectUtilisateur(Utilisateur utilisateur){
         this.utilisateur = utilisateur;
         nametxt.setText(utilisateur.getName());
+        nametxt.setDisable(true);
         prenomtxt.setText(utilisateur.getPrenom());
+        prenomtxt.setDisable(true);
     }
 
-    public void injectProgrammation(String name, String prenom, String domaineMedical, String medecinFullName, String hospital, LocalDate date){
+    public void injectProgrammation(String name, String prenom, String domaineMedical, String medecinFullName, String hospital, LocalDateTime date){
         nametxt.setText(name);
         nametxt.setDisable(true);
         prenomtxt.setText(prenom);
@@ -77,14 +91,17 @@ public class ProgrammationController  implements Initializable {
         domaineMedicalselected.setText(domaineMedical);
         hopitalSelected.setText(hospital);
         medecinSelected.setText(medecinFullName);
-        datePickerS.setValue(date);
+        medecinList.setDisable(true);
+        domaineList.setDisable(true);
+        hopitalList.setDisable(true);
+        // datePickerS.setValue(date); TODO
         datePickerS.setDisable(true);
-        valideB.setText("Fermer");
+        valideB.setText("OK");
     }
 
     public void valider(ActionEvent event) {
 
-        if(!valideB.getText().equals("Fermer")){
+        if(!valideB.getText().equals("OK")){
             Programmation programmation = new Programmation();
 
             programmation.setCodePatient(utilisateur.getCodeUnique());
@@ -93,7 +110,9 @@ public class ProgrammationController  implements Initializable {
 
             //--//
             programmation.setDomaineMedical(DomaineMedical.valueOf(domaineMedicalselected.getText()).name());
-            programmation.setDate(datePickerS.getValue());
+
+            LocalDate value = datePickerS.getValue();
+            programmation.setDate(value.atStartOfDay());
 
             //affichage des 2 du bas a l action du select sur les 2 du haut
             //on va simuller une recherche des hospitaux et medecin
@@ -108,4 +127,6 @@ public class ProgrammationController  implements Initializable {
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
 
     }
+
+
 }

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.collections.*?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GestionConsultaionController">
+<?import javafx.scene.text.*?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1147.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GestionConsultaionController">
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: skyblue;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="600.0" prefWidth="894.0" style="-fx-background-color: skyblue;" BorderPane.alignment="CENTER">
          <children>
-            <VBox layoutX="14.0" layoutY="27.0" prefHeight="335.0" prefWidth="536.0">
+            <VBox layoutX="-7.0" layoutY="56.0" prefHeight="294.0" prefWidth="345.0">
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
-               <ListView fx:id="listViewPg" onMouseClicked="#handleMouseClick" prefHeight="300.0" prefWidth="350.0">
+               <ListView fx:id="listViewPg" onMouseClicked="#handleMouseClick" prefHeight="230.0" prefWidth="301.0">
                   <items>
                      <FXCollections fx:factory="observableArrayList">
 
@@ -21,18 +21,86 @@
                   </items>
                </ListView>
             </VBox>
+            <VBox layoutX="-7.0" layoutY="325.0" prefHeight="274.0" prefWidth="342.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <ListView fx:id="listViewCs" onMouseClicked="#handleMouseClickCs" prefHeight="243.0" prefWidth="258.0">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList" />
+                     </items>
+                  </ListView>
+               </children>
+            </VBox>
+            <Label fx:id="listViewPgLabel" layoutX="14.0" layoutY="32.0" text="Liste des programmations">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="listCsLabel" layoutX="17.0" layoutY="312.0" text="Liste des consultations">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <VBox fx:id="vbRecette" layoutX="337.0" layoutY="297.0" prefHeight="300.0" prefWidth="340.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <Label fx:id="listRecetteLabel" prefHeight="27.0" prefWidth="257.0" text="Liste des recettes" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="listRecette" onMouseClicked="#handleMouseClickRc" prefHeight="234.0" prefWidth="283.0">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList" />
+                     </items>
+                  </ListView>
+               </children>
+            </VBox>
+            <VBox fx:id="vbProduit" layoutX="333.0" layoutY="57.0" prefHeight="288.0" prefWidth="343.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <ListView fx:id="listProduit" onMouseClicked="#handleMouseClickProduit" prefHeight="228.0" prefWidth="303.0">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList" />
+                     </items>
+                  </ListView>
+               </children>
+            </VBox>
+            <Label fx:id ="listproduitlabel" layoutX="353.0" layoutY="34.0" text="Liste des produits">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="listeuserlabel" layoutX="700.0" layoutY="32.0" text="Liste des utilisateurs">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="produitCB" layoutX="530.0" layoutY="39.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="121.0" text="Produits sans MAJ" />
+            <ListView fx:id="listUtilisateur" layoutX="700.0"  onMouseClicked="#handleMouseClickUtilisateur" layoutY="76.0" prefHeight="502.0" prefWidth="250.0" >
+               <items>
+                  <FXCollections fx:factory="observableArrayList" />
+               </items>
+            </ListView>
+            <CheckBox fx:id="utilisateurCB" layoutX="878.0" layoutY="39.0" mnemonicParsing="false" text="inactifs" />
 
          </children>
       </AnchorPane>
 
    </center>
    <left>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="600.0" prefWidth="174.0" BorderPane.alignment="CENTER">
          <children>
             <Button layoutX="-3.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="198.0" style="-fx-background-color: clair;" text="Accuiel" />
-            <Button layoutY="54.0" mnemonicParsing="false" onAction="#programmation" prefHeight="25.0" prefWidth="194.0" style="-fx-background-color: clair;" text="Faire une programmation" />
-            <Button layoutX="-1.0" layoutY="92.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="194.0" style="-fx-background-color: clair;" text="Ajouter une consultation" />
-            <Button layoutX="57.0" layoutY="453.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: lear;" text="Log out" />
+            <Button layoutX="-10.0" layoutY="55.0" mnemonicParsing="false" onAction="#programmation" prefHeight="25.0" prefWidth="194.0" style="-fx-background-color: clair;" text="Faire une programmation" />
+            <Button fx:id="consultationKey" layoutX="-10.0" layoutY="92.0" mnemonicParsing="false" onAction="#consultation" prefHeight="25.0" prefWidth="194.0" style="-fx-background-color: clair;" text="Ajouter une consultation" />
+            <Button layoutX="32.0" layoutY="529.0" mnemonicParsing="false" onAction="#connect" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: lear;" text="Log out" />
          </children>
       </Pane>
    </left>
